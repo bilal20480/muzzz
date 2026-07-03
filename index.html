@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+<title>Happy Birthday, Manal Jasmine ❤️</title>
+
+<!-- ============================================================
+     FONTS — elegant cursive display, clean body, handwritten quotes
+     ============================================================ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Quicksand:wght@300;400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+
+<!-- ============================================================
+     LIBRARIES (all loaded from CDN — no build step needed)
+     ============================================================ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     CURSOR SPARKLE (desktop only — see script.js)
+     ============================================================ -->
+<div id="cursor-glow" aria-hidden="true"></div>
+
+<!-- ============================================================
+     AMBIENT BACKGROUND CANVAS — stars, petals, fireflies, bokeh
+     Lives behind every section, fixed, full page.
+     ============================================================ -->
+<canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+<!-- ============================================================
+     SCROLL PROGRESS — a vine that blooms as you scroll down
+     ============================================================ -->
+<div id="vine-progress" aria-hidden="true">
+  <svg width="14" height="100%" viewBox="0 0 14 100" preserveAspectRatio="none">
+    <line x1="7" y1="0" x2="7" y2="100" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+    <line id="vine-fill" x1="7" y1="0" x2="7" y2="0" stroke="#E8B4B8" stroke-width="2"/>
+  </svg>
+</div>
+
+<!-- ============================================================
+     MUSIC TOGGLE — synthesized soft-piano ambience (script.js)
+     No external mp3 required, but you can drop your own track at
+     assets/music/birthday-song.mp3 and the site will use it instead.
+     ============================================================ -->
+<button id="music-toggle" aria-label="Toggle background music">
+  <span class="music-icon">♪</span>
+  <span class="music-bars"><i></i><i></i><i></i></span>
+</button>
+
+<!-- ============================================================
+     1. LOADER
+     ============================================================ -->
+<div id="loader">
+  <div class="loader-flower">
+    <div class="petal p1"></div><div class="petal p2"></div>
+    <div class="petal p3"></div><div class="petal p4"></div>
+    <div class="petal p5"></div><div class="loader-center"></div>
+  </div>
+  <p class="loader-text">wrapping up something beautiful…</p>
+</div>
+
+<!-- ============================================================
+     2. LANDING / GATE SCREEN
+     ============================================================ -->
+<section id="landing" class="screen">
+  <div class="landing-inner">
+    <p class="eyebrow" data-aos="fade-down">a little something for</p>
+    <h1 class="title-script">Happy Birthday</h1>
+    <h2 class="name-display">Manal Jasmine <span class="heart">❤️</span></h2>
+    <p class="tagline">A day made beautiful because you were born.</p>
+    <button id="open-surprise" class="glow-btn">
+      <span>✨ Open Your Surprise ✨</span>
+    </button>
+  </div>
+  <div id="landing-burst" aria-hidden="true"></div>
+</section>
+
+<!-- ============================================================
+     MAIN CONTENT — hidden until surprise is opened
+     ============================================================ -->
+<main id="main-content" hidden>
+
+  <!-- 3. HERO -->
+  <section id="hero" class="screen">
+    <div class="hero-inner">
+      <h2 class="hero-heading">
+        Happy Birthday,<br>
+        <span class="script-accent">My Dearest Manal Jasmine</span> ❤️
+      </h2>
+      <div class="hero-lines" id="hero-lines">
+        <p>You make ordinary days feel extraordinary.</p>
+        <p>Your smile brightens the darkest moments.</p>
+        <p>Your kindness inspires everyone around you.</p>
+        <p>Today is your day…</p>
+        <p>and the world is celebrating someone truly wonderful.</p>
+      </div>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"><span></span>scroll</div>
+  </section>
+
+  <!-- 4. THE CAKE -->
+  <section id="cake-section" class="screen">
+    <h2 class="section-title" data-aos="fade-up">Make a Wish</h2>
+    <div class="cake-wrap" data-aos="zoom-in">
+      <div class="cake">
+        <div class="flame f1"></div><div class="flame f2"></div><div class="flame f3"></div>
+        <div class="candle c1"></div><div class="candle c2"></div><div class="candle c3"></div>
+        <div class="tier tier-top"><span class="icing"></span></div>
+        <div class="tier tier-mid"><span class="icing"></span></div>
+        <div class="tier tier-base"><span class="icing"></span></div>
+        <div class="plate"></div>
+      </div>
+      <div class="smoke-wrap" id="smoke-wrap"></div>
+    </div>
+    <button id="blow-btn" class="glow-btn outline">🎂 Blow the Candles</button>
+    <p id="wish-text" class="wish-reveal">Make a wish 🌸</p>
+  </section>
+
+  <!-- 5. MEMORY GARDEN -->
+  <section id="garden" class="screen tall">
+    <h2 class="section-title" data-aos="fade-up">Memory Garden</h2>
+    <p class="section-sub" data-aos="fade-up">Hover a flower to watch a memory bloom</p>
+    <div class="garden-grid">
+      <!-- 5 flowers → 5 memory placeholders. Replace .ph-img backgrounds in style.css or swap in <img> tags. -->
+      <div class="flower-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="flower"><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-center"></div></div>
+        <div class="memory-card"><div class="ph-img ph1" style="background-image: url('assets/images/profile.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div><p>A memory worth keeping forever</p></div>
+      </div>
+      <div class="flower-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="flower"><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-center"></div></div>
+        <div class="memory-card"><div class="ph-img ph2" style="background-image: url('assets/images/jasmine.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div><p>A laugh I'll never forget</p></div>
+      </div>
+      <div class="flower-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="flower"><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-center"></div></div>
+        <div class="memory-card"><div class="ph-img ph3" style="background-image: url('assets/images/manal.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div><p>A moment frozen in time</p></div>
+      </div>
+      <div class="flower-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="flower"><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-center"></div></div>
+        <div class="memory-card"><div class="ph-img ph4" style="background-image: url('assets/images/jasi.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div><p>A day that felt like magic</p></div>
+      </div>
+      <div class="flower-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="flower"><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-petal"></div><div class="fl-center"></div></div>
+        <div class="memory-card"><div class="ph-img ph5" style="background-image: url('assets/images/mani.jpeg'); background-size: cover; background-position: center; background-repeat: no-repeat;"></div><p>To many more like this</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. REASONS YOU'RE AMAZING -->
+  <section id="reasons" class="screen tall">
+    <h2 class="section-title" data-aos="fade-up">Reasons You're Amazing</h2>
+    <div class="reasons-grid" id="reasons-grid">
+      <!-- filled by script.js so floating delays stay randomized and tidy -->
+    </div>
+  </section>
+
+  <!-- 7. BIRTHDAY WISHES -->
+  <section id="wishes" class="screen tall">
+    <div class="letter" data-aos="fade-up">
+      <h2 class="section-title">A Letter For You</h2>
+      <div class="letter-body">
+        <p>Dear Manal,</p>
+        <p>Today isn't just another day on the calendar. It's the day someone incredibly beautiful entered this world, and everything since has been a little brighter because of it.</p>
+        <p>Thank you for existing. Thank you for bringing warmth into rooms that didn't know they needed it, for the kind of laughter that makes people forget their bad day, and for being so effortlessly, wonderfully <em>you</em>.</p>
+        <p>May every dream you've quietly carried find its way to you. May every tear you've ever cried be repaid with a smile that lasts longer. May your heart stay exactly as full of love as it has always given away.</p>
+        <p>May happiness choose you — not just today, but every single ordinary Tuesday from here on. May the people around you cherish you the way you deserve, and may you never forget how rare you are.</p>
+        <p>May Allah bless you with endless peace, good health, quiet success, loud laughter, and a year so full of beautiful memories that you run out of room to keep them all.</p>
+        <p>Happy birthday, once again. Keep smiling the way only you can.</p>
+        <p>You deserve the world. ❤️</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7.5. DUAS & BLESSINGS -->
+  <section id="duas" class="screen tall">
+    <h2 class="section-title" data-aos="fade-up">Duas For You</h2>
+    <p class="section-sub" data-aos="fade-up">Prayers for your beautiful journey ahead</p>
+    <div class="duas-grid">
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="0" style="animation-delay: 0.1s">May Allah bless you with a long, beautiful life filled with endless peace and radiant health.</div>
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="100" style="animation-delay: 0.3s">May Allah grant you success in everything you set out to do, making every path easy for you.</div>
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="200" style="animation-delay: 0.6s">May your heart always find comfort and joy, and may Allah protect you from every hidden sorrow.</div>
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="300" style="animation-delay: 0.2s">May Allah illuminate your future with opportunities as bright and beautiful as your smile.</div>
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="400" style="animation-delay: 0.7s">May you always be surrounded by people who love you purely, deeply, and unconditionally.</div>
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="0" style="animation-delay: 0.4s">May Allah replace any hardship you ever face with ease and unimaginable blessings.</div>
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="100" style="animation-delay: 0.1s">May your faith remain strong, and may your connection with Allah bring you unshakeable peace.</div>
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="200" style="animation-delay: 0.5s">May you achieve every dream you’ve quietly made dua for, in the best and most beautiful way.</div>
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="300" style="animation-delay: 0.8s">May Allah protect you from all harm, both seen and unseen, and keep you safe always.</div>
+      <div class="dua-card" data-aos="fade-up" data-aos-delay="400" style="animation-delay: 0.3s">May every year of your life be better than the last, filled with love, laughter, and endless grace.</div>
+    </div>
+  </section>
+
+  <!-- 8. BIRTHDAY TIMELINE -->
+  <section id="timeline" class="screen tall">
+    <h2 class="section-title" data-aos="fade-up">Her Birthday, Hour by Hour</h2>
+    <div class="timeline-track">
+      <div class="timeline-stop" data-aos="fade-right">
+        <div class="tl-icon sunrise"><div class="sun"></div></div>
+        <h3>Morning</h3>
+        <p>Good morning, birthday girl 🌸 — may you wake up already feeling celebrated.</p>
+      </div>
+      <div class="timeline-stop" data-aos="fade-left">
+        <div class="tl-icon noon"><div class="sun bright"></div></div>
+        <h3>Afternoon</h3>
+        <p>Enjoy every moment today — slowly, fully, without rushing a second of it.</p>
+      </div>
+      <div class="timeline-stop" data-aos="fade-right">
+        <div class="tl-icon dusk"><div class="lantern"></div><div class="lantern l2"></div></div>
+        <h3>Evening</h3>
+        <p>May your evening sparkle as warmly as the candles you blew out earlier.</p>
+      </div>
+      <div class="timeline-stop" data-aos="fade-left">
+        <div class="tl-icon night"><div class="moon"></div><div class="star s1"></div><div class="star s2"></div><div class="star s3"></div></div>
+        <h3>Night</h3>
+        <p>And as the stars come out, may today end exactly as beautifully as it began.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. INTERACTIVE SURPRISE BOX -->
+  <section id="surprise-box" class="screen">
+    <h2 class="section-title" data-aos="fade-up">One More Thing</h2>
+    <div class="gift-wrap" data-aos="zoom-in">
+      <div class="gift" id="gift">
+        <div class="gift-lid"><div class="ribbon-v"></div><div class="bow"><span></span><span></span></div></div>
+        <div class="gift-base"><div class="ribbon-v"></div></div>
+      </div>
+    </div>
+    <button id="open-gift-btn" class="glow-btn outline">🎁 Open Gift</button>
+    <p id="gift-text" class="wish-reveal">You are the greatest gift this world received.</p>
+  </section>
+
+  <!-- 10. FLOATING LOVE NOTES + LEAVE A WISH (lives as an ambient layer, see script.js) -->
+  <div id="love-notes-layer" aria-hidden="true"></div>
+
+  <!-- BONUS: Countdown + Leave-a-wish wall -->
+  <section id="extras" class="screen tall">
+    <div class="extras-grid">
+      <div class="countdown-card" data-aos="fade-up">
+        <h3>Counting down to her next birthday</h3>
+        <div class="countdown-numbers" id="countdown">
+          <div><span id="cd-days">--</span><small>days</small></div>
+          <div><span id="cd-hours">--</span><small>hrs</small></div>
+          <div><span id="cd-min">--</span><small>min</small></div>
+          <div><span id="cd-sec">--</span><small>sec</small></div>
+        </div>
+        <p class="hint">because the celebration shouldn't stop today</p>
+      </div>
+      <div class="wishwall-card" data-aos="fade-up" data-aos-delay="150">
+        <h3>Leave her a little wish</h3>
+        <p class="hint">it'll float across the screen for her to see</p>
+        <form id="wish-form">
+          <input id="wish-input" type="text" maxlength="80" placeholder="Type a wish for Manal…" required>
+          <button type="submit" class="glow-btn small">Send 🌸</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. FINALE FIREWORKS -->
+  <section id="finale" class="screen">
+    <canvas id="fireworks-canvas"></canvas>
+    <div class="finale-text">
+      <h2 class="title-script">Happy Birthday</h2>
+      <h3 class="name-display">Manal Jasmine <span class="heart">❤️</span></h3>
+    </div>
+  </section>
+
+  <!-- 12. ENDING MESSAGE -->
+  <section id="ending" class="screen">
+    <div class="ending-text" data-aos="fade-up">
+      <p>No matter where life takes you,</p>
+      <p>I hope every year makes you happier,</p>
+      <p>every dream comes true,</p>
+      <p>and every smile lasts forever.</p>
+      <p class="emph">May this birthday be the beginning of your most beautiful chapter yet.</p>
+      <p>Happy birthday, once again.</p>
+      <p>Keep shining.</p>
+      <p class="emph">The world is brighter because of you.</p>
+    </div>
+  </section>
+
+  <!-- 13. FOOTER -->
+  <footer id="footer">
+    <p>Made with ❤️ especially for</p>
+    <p class="footer-name">Manal Jasmine</p>
+    <p class="footer-blessing">"May Allah bless you always."</p>
+  </footer>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
